@@ -36,3 +36,15 @@ def request():
     deferred.addCallback(request_done)
     return deferred
 
+def requests_generator():
+    global req_generated
+
+    yield None
+
+while True:
+    deferred = request()
+    req_generated += 1
+    # do not yield deferred here so cooperator won't pause until
+    # response is received
+
+
