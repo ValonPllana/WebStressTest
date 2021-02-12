@@ -47,4 +47,10 @@ while True:
     # do not yield deferred here so cooperator won't pause until
     # response is received
 
-
+  if _name_ == '_main_':
+        # make cooperator work on spawning requests
+        cooperator.cooperate(requests_generator())
+        # run the counter that will be reporting sending speed once a second
+        reactor.callLater(1, counter)
+        # run the reactor
+        
