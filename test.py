@@ -21,5 +21,18 @@ reactor.callLater(1, counter)
 def body_received(body):
     global req_done
     req_done += 1
+def request_done(response):
+    global req_made
+    deferred = treq.json_content(response)
+    req_made += 1
+    deferred.addCallback(body_received)
+    deferred.addErrback(lambda x: None)  # ignore errors
+    return deferred
 
+
+def request():
+    deferred = treq.request('GET','https://rronp-weather-app.herokuapp.com/')
+
+    deferred.addCallback(request_done)
+    return deferred
 
