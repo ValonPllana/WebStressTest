@@ -18,3 +18,8 @@ def counter():
 # reset the counters and reschedule ourselves
 req_generated = req_made = req_done = 0
 reactor.callLater(1, counter)
+def body_received(body):
+    global req_done
+    req_done += 1
+
+
